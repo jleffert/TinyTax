@@ -10,9 +10,6 @@ class Wallet:
         self.transaction_group = {}
         self.account_api_url = ACCOUNT_URL + self.address
 
-    def get_address(self):
-        return self.address
-
     def transactions(self):
         if self.transactions_cache:
             return self.transactions_cache
