@@ -14,16 +14,22 @@ class ApplicationTransaction(Transaction):
                 # First transaction of a group does not contain defining info
                 if app_arguments[0] == 'Ym9vdHN0cmFw':
                     wallet.transaction_groups[self.group_id].action = 'Begin pool'
+                    # TODO: Double check tinyman functionality
+                    self.platform = 'TinyMan'
                 elif app_arguments[0] == 'c3dhcA==':
+                    self.platform = 'TinyMan'
                     if app_arguments[1] == 'Zmk=':
                         wallet.transaction_groups[self.group_id].action = 'Sell'
                     elif app_arguments[1] ==  'Zm8=':
                         wallet.transaction_groups[self.group_id].action = 'Buy'
                 elif app_arguments[0] == 'bWludA==':
+                    self.platform = 'TinyMan'
                     wallet.transaction_groups[self.group_id].action = 'Add to pool'
                 elif app_arguments[0] == 'YnVybg==':
+                    self.platform = 'TinyMan'
                     wallet.transaction_groups[self.group_id].action = 'Remove from pool'
                 elif app_arguments[0] == 'cmVkZWVt':
+                    self.platform = 'TinyMan'
                     wallet.transaction_groups[self.group_id].action = 'Redeed Slippage'
                 else:
                     wallet.transaction_groups[self.group_id].action = 'Unkown'
@@ -31,5 +37,5 @@ class ApplicationTransaction(Transaction):
                 self.type = 'App opt in'
             else:
                 wallet.transaction_groups[self.group_id].action = 'Unkown'
-
-        self.set_platform()
+        if self.platform is None:
+            self.set_platform()
