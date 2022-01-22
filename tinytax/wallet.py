@@ -7,7 +7,7 @@ class Wallet:
     def __init__(self, address):
         self.address = address
         self.transactions_cache = []
-        self.transaction_group = {}
+        self.transaction_groups = {}
         self.account_api_url = ACCOUNT_URL + self.address
 
     def transactions(self):
@@ -23,16 +23,14 @@ class Wallet:
         
         while 'next-token' in response_json:
             for transaction_json in response_json['transactions']:
-                transaction = transaction_builder(self, transaction_json)
                 if 'group' in transaction_json:
-                    self.add_to_transaction_group(transaction)
+                    if transaction_json['group'] not in self.transaction_groups:
+                        self.transaction_groups[transaction_json['group']] = TransactionGroup(transaction_json['group'])
+                    transaction = transaction_builder(self, transaction_json)
+                    self.transaction_groups[transaction.group_id].transactions.append(transaction)
+                else:
+                    transaction = transaction_builder(self, transaction_json)
                 self.transactions.append(transaction)
             response_json = get(self.account_api_url + '/transactions', params={'next': response_json['next-token'], 'limit': limit}).json()
 
         return self.transactions
-
-    def add_to_transaction_group(self, transaction):
-        if transaction.group_id not in self.transaction_group:
-            self.transaction_group[transaction.group_id] = TransactionGroup(transaction.group_id)
-        
-        self.transaction_group[transaction.group_id].transactions.append(transaction)
