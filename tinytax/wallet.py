@@ -1,5 +1,5 @@
 from requests import get
-from transaction import transaction_builder
+from transactions.transaction_builder import transaction_builder
 from transaction_group import TransactionGroup
 ACCOUNT_URL = 'https://algoindexer.algoexplorerapi.io/v2/accounts/'
 
