@@ -1,4 +1,5 @@
 from datetime import datetime
+from contracts import yieldlyDB, algofiDB
 
 TRANSACTION_TYPES = {
     'pay' : 'ALGO Transaction',
@@ -27,6 +28,14 @@ class Transaction:
         else:
             return 'Unknown'
 
+    def set_platform(self):
+        if self.sender in yieldlyDB or self.receiver in yieldlyDB:
+            self.platform = 'Yieldly'
+        elif self.sender in algofiDB or self.receiver in algofiDB:
+            self.platform = 'Algofi'
+        else:
+            self.platform = None
+        # TODO: Detect Tinyman
 
 class PaymentTransaction(Transaction):
     def __init__(self, wallet, data):
@@ -47,19 +56,22 @@ class PaymentTransaction(Transaction):
             self.type = 'Staking'
         else:
             self.type = 'Unkown Payment'
+        self.set_platform()
     
 
 class AsaTransaction(Transaction):
     def __init__(self, wallet, data):
         super().__init__(wallet, data)
         self.transaction_type = 'axfer'
-        print('axfer')
+        self.receiver = data['asset-transfer-transaction']['receiver']
+        self.set_platform()
 
 class ApplicationTransaction(Transaction):
     def __init__(self, wallet, data):
         super().__init__(wallet, data)
         self.transaction_type = 'appl'
-        print('appl')
+        self.receiver = data['application-transaction']['application-id']
+        self.set_platform()
 
 def transaction_builder(wallet, data):
     match data['tx-type']:
