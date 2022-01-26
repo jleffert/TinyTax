@@ -46,6 +46,6 @@ algofiDB = {'3EPGHSNBBN5M2LD6V7A63EHZQQLATVQHDBYJQIZ6BLCBTIXA5XR7ZOZEB4'   :   '
             '465814149' :  'Algofi - goBTC Market',
             '465814222' :  'Algofi - goETH Market',
             '465814278' :  'Algofi - STBL Market',
-            '482625868' :  'Algofi - STBL Staking',
-            '485247444' :  'Algofi - STBL/USDC LP Staking'}
+            '482608867' :  'Algofi - STBL Staking',
+            '553866305' :  'Algofi - STBL/USDC LP Staking'}
 

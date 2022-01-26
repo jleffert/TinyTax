@@ -29,3 +29,4 @@ class AsaTransaction(Transaction):
 
         if self.platform is None:
             self.set_platform()
+        
