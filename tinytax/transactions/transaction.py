@@ -37,7 +37,14 @@ class Transaction:
             self.platform = 'Yieldly'
         elif self.sender in algofiDB or self.receiver in algofiDB:
             self.platform = 'Algofi'
-            print(f"{self.platform} - {self.date}")
         else:
             self.platform = None
         # TODO: Detect Tinyman
+
+    def set_rewards(self, data):
+        if self.sender == self.wallet.address and data['sender-rewards'] > 0:
+            self.rewards = data['sender-rewards']
+        elif self.receiver == self.wallet.address and data['receiver-rewards'] > 0:
+            self.rewards  = data['receiver-rewards']
+        else:
+            self.rewards = 0

@@ -6,6 +6,7 @@ class ApplicationTransaction(Transaction):
         self.transaction_type = 'appl'
         applilcation_transaction_data = data['application-transaction']
         self.receiver = str(applilcation_transaction_data['application-id'])
+        self.set_rewards(data)
 
         if 'application-args' in applilcation_transaction_data:
             app_arguments = applilcation_transaction_data['application-args']

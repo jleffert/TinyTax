@@ -6,6 +6,7 @@ class PaymentTransaction(Transaction):
         self.transaction_type = 'pay'
         payment_data = data['payment-transaction']
         self.receiver = payment_data['receiver']
+        self.set_rewards(data)
         if payment_data['amount'] != 0: # 0 Transactions are for compounding rewards
             if self.receiver == wallet.address:
                 self.type = 'Receive'

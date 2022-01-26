@@ -6,6 +6,7 @@ class AsaTransaction(Transaction):
         self.transaction_type = 'axfer'
         asset_transfer_data = data['asset-transfer-transaction']
         self.receiver = asset_transfer_data['receiver']
+        self.set_rewards(data)
         
         asset_id = str(asset_transfer_data['asset-id'])
         if 'close-to' in asset_transfer_data: # Remove ASA
