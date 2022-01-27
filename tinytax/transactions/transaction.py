@@ -14,6 +14,11 @@ class Transaction:
         self.sender = data['sender']
         self.date = str(datetime.fromtimestamp(data['round-time']))
         self.platform = None
+        self.out_quantity = ''
+        self.out_asset_id = ''
+        self.in_quantity = ''
+        self.in_asset_id = ''
+        self.fee_id = 'ALGO'
 
         if 'group' in data:
             self.group_id = data['group']
